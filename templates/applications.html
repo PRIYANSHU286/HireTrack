@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% block content %}<header class="pagehead"><small>CANDIDATE WORKSPACE</small>
+    <h1>My applications</h1>
+    <p>Follow the progress of every opportunity.</p>
+</header>
+<section class="tablebox">{% if rows %}<table>
+        <tr>
+            <th>ROLE / COMPANY</th>
+            <th>LOCATION</th>
+            <th>APPLIED</th>
+            <th>STATUS</th>
+        </tr>{% for r in rows %}<tr>
+            <td><b>{{r.title}}</b><small>{{r.company}}</small></td>
+            <td>{{r.location}}</td>
+            <td>{{r.applied[:10]}}</td>
+            <td><span class="status">{{r.status}}</span></td>
+        </tr>{% endfor %}
+    </table>{% else %}<div class="empty">
+        <h2>No applications yet</h2>
+        <p>Browse jobs and submit your first application.</p><a class="buttonlink" href="/">Explore jobs</a>
+    </div>{% endif %}</section>{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}{% block title %}Find your next opportunity · HireTrack{% endblock %}{% block content %}
+<section class="hero">
+    <div><small>YOUR NEXT CHAPTER STARTS HERE</small>
+        <h1>Find work that<br><em>moves you forward.</em></h1>
+        <p>Discover opportunities, apply in a few clicks, and keep every application organised.</p>
+        <form class="search" action="/" method="get"><input name="q" value="{{q}}"
+                placeholder="Role, company, skill or location"><button>Search jobs</button></form>
+    </div>
+    <aside><small>THE HIRETRACK WORKSPACE</small>
+        <h2>Your job search,<br>all in one place.</h2>
+        <p>Explore roles · Apply · Track progress</p>
+        <div class="orb">H</div>
+    </aside>
+</section>
+<div class="sectiontitle">
+    <div><small>CURATED OPPORTUNITIES</small>
+        <h2>Explore open positions</h2>
+    </div><span>{{jobs|length}} roles</span>
+</div>
+<section class="grid">{% for j in jobs %}<article class="job">
+        <div class="jobtop">
+            <div class="avatar">{{j.company[0]}}</div><label>{{j.kind}}</label>
+        </div>
+        <h3>{{j.title}}</h3><b class="company">{{j.company}}</b>
+        <p class="location">⌖ {{j.location}}</p>
+        <p>{{j.description}}</p>
+        <div class="skills">{% for s in j.skills.split(',') %}<span>{{s.strip()}}</span>{% endfor %}</div>
+        <div class="jobfoot">{% if j.id in applied %}<b class="done">✓ Applied</b>{% elif session.get('role')=='admin'
+            %}<span>Admin preview</span>{% else %}<form method="post" action="/apply/{{j.id}}"><button
+                    class="darkbtn">Apply now →</button></form>{% endif %}</div>
+    </article>{% else %}<p>No matching jobs. Try another search.</p>{% endfor %}</section>{% endblock %}
